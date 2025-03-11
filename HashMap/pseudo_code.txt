@@ -1,0 +1,57 @@
+# Define the structure for a hash table entry (node)
+struct HashNode {
+    key -> string
+    value -> any data type
+    next -> pointer to next node (for chaining)
+}
+
+# Define the structure for the hash table
+struct HashTable {
+    array -> array of HashNode pointers
+    size -> integer (number of buckets)
+}
+
+# Hash function
+function hash_function(key, size):
+    hash_value = compute hash of key  # (e.g., djb2 or FNV-1)
+    index = hash_value % size
+    return index
+
+# Insert operation
+function insert(hash_table, key, value):
+    index = hash_function(key, hash_table.size)
+    new_node = create new HashNode(key, value)
+    
+    if hash_table.array[index] is NULL:
+        hash_table.array[index] = new_node  # Insert directly
+    else:
+        # Handle collision using chaining (linked list)
+        traverse the linked list at index
+        if key exists:
+            update value
+        else:
+            add new_node to head of linked list
+
+# Search operation
+function search(hash_table, key):
+    index = hash_function(key, hash_table.size)
+    traverse the linked list at index
+    if key found:
+        return value
+    else:
+        return NULL
+
+# Delete operation
+function delete(hash_table, key):
+    index = hash_function(key, hash_table.size)
+    traverse the linked list at index
+    if key found:
+        remove node from linked list
+    else:
+        return "Key not found"
+
+# Resize (optional)
+function resize(hash_table, new_size):
+    create new hash table with new_size
+    rehash all keys from old table to new table
+    free old table memory
